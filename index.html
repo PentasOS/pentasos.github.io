@@ -1,147 +1,73 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PentasOS — операционная система, написанная с нуля</title>
-<meta name="description" content="PentasOS — ОС с нуля: UEFI-загрузчик, ядро на C, PE32+, GUI и шелл.">
-<style>
-  :root {
-    --bg: #0b0d12;
-    --text: #e8eaf0;
-    --muted: #9aa3b2;
-    --accent: #6c5ce7;
-    --accent-2: #00d2ff;
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
-    line-height: 1.6;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-  a { color: inherit; text-decoration: none; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#090b16" />
+  <title>PentasOS — новая система в разработке</title>
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap');
+/* Windows-inspired command window */
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:#eef0ff;background:#090b16;font-family:Manrope,Arial,sans-serif;overflow-x:hidden}.noise{position:fixed;inset:0;pointer-events:none;opacity:.035;z-index:3;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}main,footer{max-width:1180px;margin:auto;padding-left:40px;padding-right:40px}nav{height:100px;display:flex;align-items:center;justify-content:space-between}.brand{font-weight:800;letter-spacing:-1.3px;color:#fafaff;text-decoration:none;font-size:20px}.brand span{color:#9d8bff}.status,.eyebrow,.terminal,.note,footer p{font-family:'DM Mono',monospace;letter-spacing:.08em}.status{font-size:11px;color:#bcb4e8;text-decoration:none;border:1px solid #34344f;padding:10px 13px;border-radius:50px}.status i{display:inline-block;width:7px;height:7px;border-radius:50%;background:#8effbd;box-shadow:0 0 12px #8effbd;margin-right:7px}.hero{min-height:580px;display:grid;grid-template-columns:1.07fr .93fr;align-items:center;gap:30px;padding:70px 0 110px}.eyebrow{font-size:11px;color:#9e8cff;margin:0 0 20px}.hero h1{font-size:clamp(52px,6.1vw,82px);line-height:1.01;letter-spacing:-.075em;margin:0;font-weight:700}.hero h1 em{font-style:normal;color:#9c8aff}.lead{max-width:500px;line-height:1.7;color:#a9acc3;font-size:16px;margin:28px 0}.actions{display:flex;gap:12px}.button{display:inline-flex;align-items:center;gap:18px;border-radius:6px;text-decoration:none;font-size:14px;font-weight:700;padding:15px 19px}.primary{background:#9d8bff;color:#120f2a;box-shadow:0 12px 36px #7662df3d}.primary span{font-size:19px}.ghost{color:#e7e5fb;border:1px solid #3a3a54}.terminal-wrap{height:360px;position:relative;display:flex;align-items:center}.orb{position:absolute;border-radius:50%;filter:blur(2px)}.orb-one{height:270px;width:270px;background:#40368a;opacity:.4;right:9%;top:2%;filter:blur(30px)}.orb-two{height:140px;width:140px;background:#177878;opacity:.25;left:2%;bottom:1%;filter:blur(25px)}.terminal{background:#111321d9;border:1px solid #4b466f;border-radius:11px;position:relative;width:100%;box-shadow:0 30px 80px #0007;overflow:hidden;transform:rotate(-3deg)}.terminal-top{height:42px;background:#191b2c;display:flex;align-items:center;gap:7px;padding:0 15px;border-bottom:1px solid #32334a}.terminal-top span{width:8px;height:8px;border-radius:100%;background:#675a9d}.terminal-top span:nth-child(2){background:#ba8e65}.terminal-top span:nth-child(3){background:#75a886}.terminal-top b{font-size:10px;color:#8b89a2;font-weight:400;margin-left:8px}.terminal-body{padding:28px 28px 24px;font-size:13px;min-height:250px}.terminal-body p{margin:0 0 15px}.terminal-body small{color:#4f5065;margin-right:13px}.muted{color:#9895b2}.terminal strong{color:#d7d1ff;font-weight:500}.ok{color:#88efae;font-size:9px;margin-left:7px}.bar{height:3px;width:100%;background:#292b3b;margin:25px 0}.bar b{display:block;height:100%;width:71%;background:linear-gradient(90deg,#7967d9,#a58bff)}.prompt{color:#9f8cff}.prompt span{border-left:7px solid #ae9cff;animation:blink .9s infinite}@keyframes blink{50%{opacity:0}}.facts{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid #292b3e;border-bottom:1px solid #292b3e}.facts article{min-height:245px;padding:34px 28px;border-right:1px solid #292b3e}.facts article:first-child{padding-left:0}.facts article:last-child{border:0}.facts span{font:11px 'DM Mono';color:#8678c8}.facts h2{font-size:20px;letter-spacing:-.04em;margin:34px 0 10px}.facts p{color:#9396ac;font-size:14px;line-height:1.65;margin:0;max-width:280px}.roadmap{padding:135px 0 65px}.section-intro h2{font-size:clamp(34px,4.2vw,55px);line-height:1.07;letter-spacing:-.065em;margin:0 0 52px}.compatibility{background:linear-gradient(120deg,#16182c,#111622);border:1px solid #363750;border-radius:12px;padding:27px}.compat-head{display:flex;justify-content:space-between;align-items:center;padding-bottom:22px;border-bottom:1px solid #37394e}.compat-head span,.format small{font:10px 'DM Mono';letter-spacing:.1em;color:#9c8bff}.compat-head b{font-size:15px}.formats{display:grid;grid-template-columns:repeat(3,1fr)}.format{padding:28px 16px 6px 0;position:relative;display:grid;grid-template-columns:45px 1fr;gap:13px}.format:not(:last-child){border-right:1px solid #37394e;margin-right:20px}.icon{height:42px;width:42px;border:1px solid #5e5791;border-radius:8px;display:grid;place-items:center;font:10px 'DM Mono';color:#d8d1ff}.apk{background:#435c38;border-color:#6d9a61;color:#d9ffcc}.linux{background:#202a39;border-color:#506a8c;font-size:12px}.format h3{margin:1px 0 6px;font-size:14px}.format p{color:#9194aa;font-size:12px;line-height:1.55;margin:0}.format small{grid-column:2;margin-top:13px;color:#87dca5}.note{font-size:10px;line-height:1.6;color:#6e7087;margin:18px 1px}footer{border-top:1px solid #292b3e;min-height:95px;display:flex;align-items:center;justify-content:space-between}footer p{font-size:9px;color:#696b81}footer>a:last-child{font-size:13px;font-weight:600;color:#c1b8ff;text-decoration:none}@media(max-width:720px){main,footer{padding-left:22px;padding-right:22px}nav{height:80px}.hero{display:block;padding:65px 0 75px}.terminal-wrap{margin-top:70px;height:290px}.facts,.formats{grid-template-columns:1fr}.facts article,.facts article:first-child{padding:26px 0;border-right:0;border-bottom:1px solid #292b3e;min-height:0}.facts article:last-child{border-bottom:0}.compatibility{padding:20px}.compat-head{display:block}.compat-head b{display:block;margin-top:8px}.format{padding:22px 0}.format:not(:last-child){border-right:0;border-bottom:1px solid #37394e;margin-right:0}footer p{display:none}.roadmap{padding-top:85px}}
+/* Windows-inspired command window */
+.terminal{background:#090d16;border:1px solid #58536f;border-radius:8px;transform:rotate(-2deg)}
+.terminal-top{height:35px;background:#202331;padding:0 13px;border-bottom-color:#363a4a}.terminal-top span{width:10px;height:10px;border-radius:2px;background:#6e6b80}.terminal-top span:nth-child(2){background:#6e6b80}.terminal-top span:nth-child(3){background:#d95c62}.terminal-top b{color:#c9c8d4}.terminal-body{padding:31px 28px;min-height:210px;display:flex;align-items:center;font-size:15px}.prompt{margin:0;color:#f2f2f5}.prompt span{display:inline-block;width:9px;height:17px;vertical-align:-3px;background:#f2f2f5;border:0;animation:blink .9s steps(1) infinite}footer{justify-content:flex-end}footer>a{font-size:13px;font-weight:600;color:#c1b8ff;text-decoration:none}
 
-  /* ---------- Top panel ---------- */
-  header {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    backdrop-filter: blur(12px);
-    background: rgba(11, 13, 18, 0.8);
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-  }
-  .nav {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 16px 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-weight: 700;
-    font-size: 1.15rem;
-    letter-spacing: 0.5px;
-  }
-  nav ul {
-    display: flex;
-    gap: 28px;
-    list-style: none;
-    font-size: 0.95rem;
-    color: var(--muted);
-  }
-  nav ul a:hover { color: var(--text); }
-
-  /* ---------- Hero ---------- */
-  .hero {
-    flex: 1;
-    max-width: 1100px;
-    width: 100%;
-    margin: 0 auto;
-    padding: 100px 24px 80px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-  .hero::before {
-    content: "";
-    position: absolute;
-    inset: -40% -20% auto;
-    height: 600px;
-    background:
-      radial-gradient(ellipse at 30% 0%, rgba(108,92,231,0.25), transparent 60%),
-      radial-gradient(ellipse at 70% 0%, rgba(0,210,255,0.18), transparent 60%);
-    pointer-events: none;
-  }
-  .hero h1 {
-    font-size: clamp(2.4rem, 6vw, 3.8rem);
-    line-height: 1.15;
-    font-weight: 800;
-    position: relative;
-  }
-  .hero h1 span {
-    background: linear-gradient(90deg, var(--accent), var(--accent-2));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-  .hero p {
-    max-width: 720px;
-    margin: 26px auto 0;
-    font-size: clamp(1.2rem, 3vw, 1.55rem);
-    font-weight: 600;
-    line-height: 1.5;
-    color: var(--text);
-    position: relative;
-  }
-  .hero p .now {
-    background: linear-gradient(90deg, var(--accent), var(--accent-2));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-  .hero p .soon {
-    color: var(--muted);
-    font-weight: 500;
-  }
-
-  @media (max-width: 640px) {
-    nav ul { display: none; }
-  }
 </style>
 </head>
 <body>
+  <div class="noise"></div>
+  <main>
+    <nav>
+      <a class="brand" href="#top" aria-label="PentasOS">Pentas<span>OS</span></a>
+      <a class="status" href="#roadmap"><i></i> В РАЗРАБОТКЕ</a>
+    </nav>
 
-<header>
-  <div class="nav">
-    <a class="logo" href="#">
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-        <path d="M14 2 26 11 21 25 7 25 2 11Z" fill="url(#g)"/>
-        <defs>
-          <linearGradient id="g" x1="0" y1="0" x2="28" y2="28">
-            <stop stop-color="#6c5ce7"/>
-            <stop offset="1" stop-color="#00d2ff"/>
-          </linearGradient>
-        </defs>
-      </svg>
-      PentasOS
-    </a>
-  </div>
-</header>
+    <section class="hero" id="top">
+      <div class="hero-copy">
+        <div class="section-intro"><p class="eyebrow"></p><h2>PentasOS</h2></div>
+        <p class="eyebrow">СИСТЕМА НАПИСАННАЯ ПОЛНОСТЬЮ ИИ</p>
+        <p class="lead">PentasOS — экспериментальная операционная система с собственным ядром x64 и графическим интерфейсом, созданная с нуля.</p>
+        <div class="actions">
+          <a class="button primary" href="#roadmap">Смотреть планы <span>↓</span></a>
+          <a class="button ghost" href="#about">О проекте</a>
+        </div>
+      </div>
+      <div class="terminal-wrap" aria-label="Демонстрация PentasOS">
+        <div class="orb orb-one"></div><div class="orb orb-two"></div>
+        <div class="terminal">
+          <div class="terminal-top"><span></span><span></span><span></span><b>CMD</b></div>
+          <div class="terminal-body">
+            <p class="prompt">PentasOS&gt; <span></span></p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<section class="hero">
-  <h1>PentasOS</h1>
-  <p>Пока поддерживает <span class="now">EXE (Windows)</span>.<br>
-  <span class="soon">В скором будущем — APK (Android) и ELF (Linux).</span></p>
-</section>
+    <section class="facts" id="about">
+      <article><span>01</span><h2>Своё ядро x64</h2><p>Основа PentasOS уже пишется самостоятельно — с фокусом на понимание каждого слоя системы.</p></article>
+      <article><span>02</span><h2>Графическая среда</h2><p>Интерфейс постепенно обретает форму: окна, элементы управления и собственный визуальный язык.</p></article>
+      <article><span>03</span><h2>Ранний этап</h2><p>Это живой проект в активной разработке. Новые возможности появляются шаг за шагом.</p></article>
+    </section>
 
+    <section class="roadmap" id="roadmap">
+      <div class="section-intro"><p class="eyebrow">НАПРАВЛЕНИЕ РАЗВИТИЯ</p><h2>Один рабочий стол.<br>Больше возможностей.</h2></div>
+      <div class="compatibility">
+        <div class="compat-head"><span>ПЛАНИРУЕТСЯ</span><b>Совместимость приложений</b></div>
+        <div class="formats">
+          <div class="format"><div class="icon exe">.EXE</div><div><h3>Windows-приложения</h3><p>Запуск привычных EXE-файлов — в планах проекта.</p></div><small>SOON</small></div>
+        </div>
+      </div>
+      <p class="note">Планы могут меняться по мере разработки. PentasOS пока не готова к повседневному использованию.</p>
+    </section>
+  </main>
+  <footer><a href="mailto:t35583344@gmail.com">Связаться↗</a></footer>
+  <script>
+document.querySelectorAll('a[href^="#"]').forEach(link => link.addEventListener('click', () => {
+  document.body.classList.add('navigating');
+  setTimeout(() => document.body.classList.remove('navigating'), 500);
+}));
+
+</script>
 </body>
 </html>
